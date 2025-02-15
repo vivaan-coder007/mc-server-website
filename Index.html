@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Minecraft Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #222;
+            color: white;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+        section {
+            margin: 20px;
+            padding: 20px;
+            background: #444;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Public Minecraft Server</h1>
+    </header>
+    <section>
+        <p>Join my awesome Minecraft server and have fun building and exploring!</p>
+        <p><strong>Server IP:</strong> sarohavivaan.aternos.me</p>
+        <button onclick="copyIP()">Copy IP</button>
+        <p id="message"></p>
+        <p><strong>Current Players:</strong> <span id="playerCount">Loading...</span></p>
+        <p><strong>Server Timings:</strong> 6 PM - 8 PM IST</p>
+    </section>
+    <script>
+        function copyIP() {
+            navigator.clipboard.writeText("sarohavivaan.aternos.me");
+            document.getElementById("message").innerText = "Server IP copied to clipboard!";
+        }
+        
+        async function getPlayerCount() {
+            try {
+                const response = await fetch("https://api.mcsrvstat.us/2/sarohavivaan.aternos.me");
+                const data = await response.json();
+                document.getElementById("playerCount").innerText = data.players ? data.players.online : "Offline";
+            } catch (error) {
+                document.getElementById("playerCount").innerText = "Error fetching data";
+            }
+        }
+        
+        getPlayerCount();
+        setInterval(getPlayerCount, 60000); // Refresh every 60 seconds
+    </script>
+</body>
+</html>
